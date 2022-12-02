@@ -21,7 +21,28 @@ namespace MasterMind.App
 
         public static string GetGuessFeedback(string code, string input)
         {
-            throw new NotImplementedException("The logic for getting feedback for a guess is not implemented. Try to apply TDD practices to implement it.");
+            var inputList = input.ToCharArray().ToList();
+            var output = new StringBuilder();
+            for (var i = 0; i < 4; i++)
+            {
+                var codeCharacter = code[i];
+
+                if (codeCharacter == input[i])
+                {
+                    output.Append('P');
+                    inputList[i] = 'X';
+                }
+                else if (inputList.Contains(codeCharacter))
+                {
+                    var index = inputList.IndexOf(codeCharacter);
+                    if (input[index] != code[index])
+                    {
+                        output.Append('C');
+                    }
+                }
+            }
+
+            return new string(output.ToString().OrderByDescending(t => t).ToArray());
         }
     }
 }
